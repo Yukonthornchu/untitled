@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "881072041699",
+    "project_id": "bitfriend-6914a",
+    "storage_bucket": "bitfriend-6914a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:881072041699:android:52d90631b88dde2ead1fd6",
+        "android_client_info": {
+          "package_name": "com.example.untitled"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "881072041699-q0eji9knfa23vsj7gqb99sdpsabl8np8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyABmaoC-m5WwBYuYJoJaQFux0FBwaNM5HU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "881072041699-q0eji9knfa23vsj7gqb99sdpsabl8np8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
