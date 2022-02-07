@@ -5,6 +5,7 @@ import 'package:form_field_validator/form_field_validator.dart';
 import 'package:untitled/model/profile.dart';
 import 'package:untitled/screen/register.dart';
 import 'package:firebase_core_web/firebase_core_web.dart';
+import 'dart:html';
 
 class Register extends StatefulWidget {
   const Register({Key? key}) : super(key: key);
@@ -22,23 +23,23 @@ class _RegisterState extends State<Register> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: firebase,
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
+    // return FutureBuilder(
+    //     future: firebase,
+    //     builder: (context, snapshot) {
+    //       if (snapshot.hasError) {
+    //         return Scaffold(
+    //           appBar: AppBar(
+    //             title: Text("Error"),
+    //           ),
+    //           body: Center(
+    //             child: Text("${snapshot.error}"),
+    //           ),
+    //         );
+    //       }
+    //       if (snapshot.connectionState == ConnectionState.done) {
             return Scaffold(
               appBar: AppBar(
-                title: Text("Error"),
-              ),
-              body: Center(
-                child: Text("${snapshot.error}"),
-              ),
-            );
-          }
-          if (snapshot.connectionState == ConnectionState.done) {
-            return Scaffold(
-              appBar: AppBar(
-                title: Text("สร้างบัญชี"),
+                title: Text("Sign-Up"),
               ),
               body: Container(
                 child: Padding(
@@ -62,6 +63,7 @@ class _RegisterState extends State<Register> {
                                 width: 330,
                                 child: TextFormField(
                                   validator: MultiValidator([
+                                    EmailValidator(errorText: "Invalid email format"),
                                     RequiredValidator(
                                         errorText: "Email is required"),
                                     MinLengthValidator(6,
@@ -162,11 +164,11 @@ class _RegisterState extends State<Register> {
             );
           }
 
-          return Scaffold(
-            body: Center(
-              child: CircularProgressIndicator(),
-            ),
-          );
-        });
-  }
-}
+   //        return Scaffold(
+   //          body: Center(
+   //            child: CircularProgressIndicator(),
+   //          ),
+   //        );
+   //      });
+   // }
+ }
