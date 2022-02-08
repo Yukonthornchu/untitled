@@ -19,14 +19,21 @@ class _mainPageState extends State<mainPage> {
       currentIndex = index;
     });
   }
-  final List<Widget> _pageWidget= <Widget>[
-    const notification(),
-    const favorite(),
-    const market(),
-    const history(),
-    const profile(),
-
+  final screens = [
+    notification(),
+    favorite(),
+    market(),
+    history(),
+    profile(),
   ];
+  // final List<Widget> _pageWidget= <Widget>[
+  //   const notification(),
+  //   const favorite(),
+  //   const market(),
+  //   const history(),
+  //   const profile(),
+
+  // ];
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -44,12 +51,7 @@ class _mainPageState extends State<mainPage> {
 
           // centerTitle: true,
         ),
-        body: Center(
-          child: Text(
-            'home',
-            style: TextStyle(fontSize: 60),
-          ),
-        ),
+        body: screens[currentIndex],
         bottomNavigationBar: BottomNavigationBar(
 // type: BottomNavigationBarType.fixed,
 // backgroundColor: Colors.yellowAccent,

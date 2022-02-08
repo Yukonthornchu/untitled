@@ -10,13 +10,13 @@ class market extends StatefulWidget {
 class _marketState extends State<market> {
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          title: Text('Market'),
-          backgroundColor: Colors.black,
-        ),
+        // appBar: AppBar(
+        //   title: Text('Market'),
+        //   backgroundColor: Colors.black,
+        // ),
         body: Center(
           child: Text(
-            'chat',
+            'Market',
             style: TextStyle(fontSize: 60),
           ),
         ),

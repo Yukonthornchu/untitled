@@ -15,6 +15,12 @@ class _favoriteState extends State<favorite> {
         title: Text('Favorite'),
         backgroundColor: Colors.black,
       ),
+      body: Center(
+        child: Text(
+          'Favorite',
+          style: TextStyle(fontSize: 60),
+        ),
+      ),
     );
   }
 }

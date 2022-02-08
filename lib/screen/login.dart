@@ -12,12 +12,14 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   final formKey = GlobalKey<FormState>();
+  final TextEditingController _email = TextEditingController();
   final TextEditingController _pass = TextEditingController();
-  final TextEditingController _confirmPass = TextEditingController();
+  // final TextEditingController _confirmPass = TextEditingController();
   Profile profile = Profile(Email: '', Password: '');
   final Future<FirebaseApp> firebase = Firebase.initializeApp();
 
   @override
+
   Widget build(BuildContext context) {
     // return FutureBuilder(
     //     future: firebase,
