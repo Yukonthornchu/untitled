@@ -16,11 +16,11 @@ class _marketState extends State<market> {
   Future<String> getData() async{
 
     var url =
-      Uri.http('covid19.ddc.moph.go.th/','/api/Cases/today-cases-all');
+      Uri.http('covid19.ddc.moph.go.th','/api/Cases/today-cases-all');
     var response = await http.get(url);
     if (response.statusCode == 200) {
       var jsonResponse = convert.jsonDecode(response.body);
-      print(jsonResponse);
+      // print(jsonResponse);
       this.setState(() {
         _Data = jsonResponse;
         _newCase = jsonResponse[0]['new_case'];
@@ -43,7 +43,7 @@ class _marketState extends State<market> {
         // ),
         body: Column(
           children: [
-            Text('Market ${_newCase}', style: TextStyle(fontSize: 60)),
+            Text('Market ${_newCase}', style: TextStyle(fontSize: 40)),
             // Text('Market ${_Data[0]['total_case'] ?? ''}', style: TextStyle(fontSize: 60)),
 
 
