@@ -5,6 +5,7 @@ import 'package:form_field_validator/form_field_validator.dart';
 import 'package:untitled/model/profile.dart';
 import 'package:untitled/screen/register.dart';
 import 'package:firebase_core_web/firebase_core_web.dart';
+
 import 'dart:html';
 
 class Register extends StatefulWidget {
@@ -18,7 +19,7 @@ class _RegisterState extends State<Register> {
   final formKey = GlobalKey<FormState>();
   final TextEditingController _pass = TextEditingController();
   final TextEditingController _confirmPass = TextEditingController();
-  Profile profile = Profile(Email: '', Password: '');
+  Profile profile = Profile(Email: '', Password: '', Username: '');
   final Future<FirebaseApp> firebase = Firebase.initializeApp();
 
   @override
@@ -123,14 +124,7 @@ class _RegisterState extends State<Register> {
                                       return 'Password does Not Match';
                                     return null;
                                   },
-                                  //อันล่างของเก่า
-                                  // validator: MultiValidator([
-                                  //
-                                  //
-                                  //   RequiredValidator(errorText: "Please verify your password"),
-                                  //   // MatchValidator( errorText: "errorText"),
-                                  //
-                                  // ]),
+
 
                                   onSaved: (Password) {
                                     profile.Password = Password!;

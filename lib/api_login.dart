@@ -4,7 +4,7 @@
 // import 'dart:convert';
 //
 // Future login(String email,String password) async {
-//   String url = 'localhost:80/login ' ;
+//   String url = 'http://localhost:80/login/' ;
 //   final response = await http.post(url,
 //   headers: {"Accept": "Application/json"},
 //   body: {'email':email,'password':password});
