@@ -46,6 +46,7 @@ dependencies:
   api_cache_manager: ^1.0.2
   snippet_coder_utils: ^1.0.10
   shared_preferences: ^2.0.13
+  convert: ^3.0.1
 
 
 
