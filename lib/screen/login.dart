@@ -56,20 +56,20 @@ class _LoginState extends State<Login> {
   @override
 
   Widget build(BuildContext context) {
-    // return FutureBuilder(
-    //     future: firebase,
-    //     builder: (context, snapshot) {
-    //       if (snapshot.hasError) {
-    //         return Scaffold(
-    //           appBar: AppBar(
-    //             title: Text("Error"),
-    //           ),
-    //           body: Center(
-    //             child: Text("${snapshot.error}"),
-    //           ),
-    //         );
-    //       }
-    //       if (snapshot.connectionState == ConnectionState.done) {
+    return FutureBuilder(
+        future: firebase,
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return Scaffold(
+              appBar: AppBar(
+                title: Text("Error"),
+              ),
+              body: Center(
+                child: Text("${snapshot.error}"),
+              ),
+            );
+          }
+          if (snapshot.connectionState == ConnectionState.done) {
     return Scaffold(
       appBar: AppBar(
         title: Text("Sign-in"),
@@ -170,12 +170,12 @@ class _LoginState extends State<Login> {
     );
   }
 
-//        return Scaffold(
-//          body: Center(
-//            child: CircularProgressIndicator(),
-//          ),
-//        );
-//      });
-// }
+       return Scaffold(
+         body: Center(
+           child: CircularProgressIndicator(),
+         ),
+       );
+     });
+}
 }
 
