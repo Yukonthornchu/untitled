@@ -6,7 +6,7 @@ import 'package:untitled/model/profile.dart';
 import 'package:http/http.dart'as http;
 import 'package:firebase_core_web/firebase_core_web.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:untitled/api_provider.dart';
+import 'package:untitled/provider/api_provider.dart';
 import 'package:untitled/screen/market.dart';
 
 

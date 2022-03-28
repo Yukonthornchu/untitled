@@ -1,20 +1,50 @@
 
 import 'package:favorite_button/favorite_button.dart';
 import 'package:flutter/material.dart';
+import 'dart:async';
 
 class history extends StatefulWidget {
   const history({Key? key}) : super(key: key);
 
+
+
   @override
   _historyState createState() => _historyState();
+
+
 
 }
 
 class _historyState extends State<history> {
 
+
+
   @override
   Widget build(BuildContext context) {
+    Timer interval(Duration duration, func) {
+      Timer function() {
+        Timer timer = new Timer(duration, function);
+
+        func(timer);
+
+        return timer;
+      }
+
+      return new Timer(duration, function);
+    }
+
+    void main() {
+      int i = 0;
+
+      interval(new Duration(seconds: 1), (timer) {
+        print(i++);
+
+        if (i > 5) timer.cancel();
+      });
+    }
+
     return Scaffold(
+
       // appBar: AppBar(
       //   title: Text('History'),
       //   backgroundColor: Colors.black,
@@ -33,6 +63,8 @@ class _historyState extends State<history> {
 
               ),
 
+
+
               // IconButton(
               //   icon: Icon(Icons.bluetooth),
               //   iconSize: 48,
@@ -43,13 +75,13 @@ class _historyState extends State<history> {
               //     });
               //   },
               // ),
-              FavoriteButton(
-
-                isFavorite: false,
-                valueChanged: (_isFavorite) {
-                  print('Is Favorite : $_isFavorite');
-                },
-              ),
+              // FavoriteButton(
+              //
+              //   isFavorite: false,
+              //   valueChanged: (_isFavorite) {
+              //     print('Is Favorite : $_isFavorite');
+              //   },
+              // ),
 
 
 
