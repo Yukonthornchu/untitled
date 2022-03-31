@@ -1,14 +1,16 @@
 import 'dart:convert';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:untitled/model/profile.dart';
-import 'package:http/http.dart'as http;
+import 'package:http/http.dart' as http;
 import 'package:firebase_core_web/firebase_core_web.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:untitled/provider/api_provider.dart';
+import 'package:untitled/screen/mainPage.dart';
 import 'package:untitled/screen/market.dart';
-
+import 'package:untitled/screen/register.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -29,47 +31,44 @@ class _LoginState extends State<Login> {
 
   ApiProvider apiProvider = ApiProvider();
 
-  Future doLogin() async{
-    if(formKey.currentState!.validate()){
+  Future doLogin() async {
+    if (formKey.currentState!.validate()) {
       try {
-        var rs = await apiProvider.doLogin(_username.text,_password.text);
-        if(rs.statusCode == 200){
+        var rs = await apiProvider.doLogin(_username.text, _password.text);
+        if (rs.statusCode == 200) {
           var jsonRes = json.decode(rs.body);
           print(rs.body);
-          if(jsonRes ['ok']){
-
+          if (jsonRes['ok']) {
             String token = jsonRes['token'];
             print(token);
-          }else{
+          } else {
             print(jsonRes['Error']);
           }
-        }else {
+        } else {
           print('Server Error!');
         }
-      }catch(error){
+      } catch (error) {
         print(error);
       }
     }
   }
-  
 
   @override
-
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: firebase,
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return Scaffold(
-              appBar: AppBar(
-                title: Text("Error"),
-              ),
-              body: Center(
-                child: Text("${snapshot.error}"),
-              ),
-            );
-          }
-          if (snapshot.connectionState == ConnectionState.done) {
+    // return FutureBuilder(
+    //     future: firebase,
+    //     builder: (context, snapshot) {
+    //       if (snapshot.hasError) {
+    //         return Scaffold(
+    //           appBar: AppBar(
+    //             title: Text("Error"),
+    //           ),
+    //           body: Center(
+    //             child: Text("${snapshot.error}"),
+    //           ),
+    //         );
+    //       }
+    //       if (snapshot.connectionState == ConnectionState.done) {
     return Scaffold(
       appBar: AppBar(
         title: Text("Sign-in"),
@@ -99,7 +98,7 @@ class _LoginState extends State<Login> {
                           //ปิดเช้ค email ไว้ก่อน
 
                           // validator: MultiValidator([
-                            // EmailValidator(errorText: "Invalid email format"),
+                          // EmailValidator(errorText: "Invalid email format"),
                           //   RequiredValidator(
                           //       errorText: "Email is required"),
                           //   MinLengthValidator(6,
@@ -141,14 +140,17 @@ class _LoginState extends State<Login> {
                           },
                         ),
                       ),
-
                       SizedBox(
                         height: 15,
                       ),
                       SizedBox(
                         child: ElevatedButton(
                           child: Text("Login"),
-                          onPressed: () => doLogin(),
+                            onPressed: (){
+                              Navigator.push(context,
+                                MaterialPageRoute(builder: (context) => mainPage()),);
+                            }
+                          // onPressed: () => doLogin(),
                           // {
                           //   if (formKey.currentState!.validate()) {
                           //     formKey.currentState!.save();
@@ -159,6 +161,43 @@ class _LoginState extends State<Login> {
                           // },
                         ),
                       ),
+                      SizedBox(
+                        height: 15,
+                      ),
+
+                      SizedBox(
+                        child: RichText(
+                          text: TextSpan(
+                            style: const TextStyle(
+                              color: Colors.grey,
+                              fontSize: 15.0,
+                            ),
+                            children: <TextSpan>[
+                              TextSpan(text: "Don't have an account? "),
+                              TextSpan(
+                                text: 'SignUp',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  decoration: TextDecoration.underline,
+                                ),
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    // Navigator.push(context, testRegis());
+                                    // Navigator.pushName(context, '/Register');
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const Register()),
+                                    );
+                                  },
+
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+
                     ],
                   ),
                 ),
@@ -170,12 +209,11 @@ class _LoginState extends State<Login> {
     );
   }
 
-       return Scaffold(
-         body: Center(
-           child: CircularProgressIndicator(),
-         ),
-       );
-     });
+//        return Scaffold(
+//          body: Center(
+//            child: CircularProgressIndicator(),
+//          ),
+//        );
+//      });
+// }
 }
-}
-

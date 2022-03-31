@@ -107,6 +107,14 @@ class _marketState extends State<market> {
               centerTitle: true,
               forceElevated: innerBoxIsScrolled,
               floating: true,
+
+
+              // actions: [ Code ค้นหา
+              //   IconButton(onPressed: (){
+              //     showSearch(context: context, delegate: CustomSearchDelegate(),);
+              //   }, icon: const Icon(Icons.search))
+              // ],
+
             ),
           ],
 
@@ -137,5 +145,8 @@ class _marketState extends State<market> {
         ),
       );
 }
+
+
+
 
 
