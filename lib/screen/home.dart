@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:untitled/screen/login.dart';
-import 'package:untitled/screen/register.dart';
+import 'package:untitled/screen/sign_up.dart';
 import 'package:firebase_core_web/firebase_core_web.dart';
 
 
@@ -35,7 +35,7 @@ class HomeScreen extends StatelessWidget {
                     onPressed: () {
                       Navigator.push(context, MaterialPageRoute(
                           builder: (context){
-                            return Login();
+                            return LoginScreen();
 
                           })
                       );
@@ -51,7 +51,7 @@ class HomeScreen extends StatelessWidget {
                       onPressed: () {
                         Navigator.push(context, MaterialPageRoute(
                             builder: (context){
-                          return Register();
+                          return sign_up();
 
                         })
                         );

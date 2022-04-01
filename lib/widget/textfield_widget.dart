@@ -25,6 +25,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
 
     controller = TextEditingController(text: widget.text);
   }
+
   @override
   void dispose(){
     controller?.dispose();
@@ -41,6 +42,8 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
       const SizedBox(height: 8),
       TextField(
         controller: controller,
+        decoration: InputDecoration(border: OutlineInputBorder(),
+        ),
       ),
     ],
   );

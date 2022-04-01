@@ -30,10 +30,18 @@ class _EditProfileState extends State<EditProfile> {
 
         const SizedBox(height: 24),
         TextFieldWidget(
-          label:'Full Name',
+          label:'User Name',
           text: user.name,
           onChanged: (name){},
         ),
+
+    // ElevatedButton(
+    //     child: Text("Login"),
+    //     onPressed: (){
+    //       Navigator.push(context,
+    //         MaterialPageRoute(builder: (context) => mainPage()),);
+    //     }
+    //     ),
 
       ],
     ),
