@@ -1,4 +1,3 @@
-// import 'dart:convert';
 //
 // import 'package:untitled/model/LoginReq_model.dart';
 // import 'package:untitled/model/LoginResponse_model.dart';
@@ -86,17 +85,19 @@
 //
 // }
 
-
-
-
-
 import 'dart:convert';
-import 'dart:math';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:http/http.dart' as http;
 import 'package:untitled/model/LoginReq_model.dart';
 import 'package:untitled/model/LoginResponse_model.dart';
 import 'package:untitled/model/RegisReq_model.dart';
 import 'package:untitled/model/RegisResponse_model.dart';
+import 'package:untitled/model/coin_model.dart';
+import 'package:untitled/model/get_time.dart';
+import 'package:untitled/model/market_model.dart';
+import 'package:untitled/screen/favorite.dart';
+import 'package:untitled/services/base_auth.dart';
 import 'shared_service.dart';
 
 import '../config.dart';
@@ -128,8 +129,8 @@ class APIServices {
   }
 
   static Future<RegisResponse_model> register(
-      RegisReq_model model,
-      ) async {
+    RegisReq_model model,
+  ) async {
     Map<String, String> requestHeaders = {
       'Content-Type': 'application/json',
     };
@@ -141,8 +142,11 @@ class APIServices {
       headers: requestHeaders,
       body: jsonEncode(model.toJson()),
     );
-    return registerResponseJson(response.body,);
+    return registerResponseJson(
+      response.body,
+    );
   }
+
   static Future<String> getUserProfile() async {
     var loginDetails = await SharedService.loginDetails();
 
@@ -162,6 +166,75 @@ class APIServices {
       return response.body;
     } else {
       return "";
+    }
+  }
+
+  static Future<void> addFavorite(
+      {required String uid, required String symbol}) async {
+    final data = await FirebaseFirestore.instance
+        .collection(Config.favorites)
+        .doc(uid)
+        .get();
+
+    for (var i = 0; i < data.data()!['symbol']; i++) {
+      print(data.data()!['symbol'][i]);
+    }
+    final result = await FirebaseFirestore.instance
+        .collection(Config.favorites)
+        .doc(uid)
+        .set({
+      "symbol": FieldValue.arrayUnion([symbol])
+    });
+  }
+
+  static Future<MarketListModel?> getMarket() async {
+    try {
+      var url = Uri.https('dapi.binance.com', '/dapi/v1/ticker/24hr');
+      var response = await http.get(url);
+      if (response.statusCode == 200) {
+        final jsonResponse = jsonDecode(response.body);
+        return MarketListModel.fromJson(jsonResponse);
+      } else {
+        return null;
+      }
+    } catch (e) {
+      return null;
+    }
+  }
+
+  static Future<CoinListModel?> getCoin() async {
+    try {
+      var url = Uri.https('api.coincap.io', '/v2/assets');
+      var response = await http.get(url);
+      if (response.statusCode == 200) {
+        final jsonResponse = jsonDecode(response.body);
+        print(jsonResponse['data']);
+        return CoinListModel.fromJson(jsonResponse['data']);
+      } else {
+        return null;
+      }
+    } catch (e) {
+      print(e);
+      return null;
+    }
+  }
+
+  static Future<TimeListModel?> getM1(String id) async {
+    try {
+      var url = Uri.parse(
+          'https://api.coincap.io/v2/assets/${id}/history?interval=m1');
+      print(url);
+      var response = await http.get(url);
+      if (response.statusCode == 200) {
+        final jsonResponse = jsonDecode(response.body);
+        print(jsonResponse['data']);
+        return TimeListModel.fromJson(jsonResponse['data']);
+      } else {
+        return null;
+      }
+    } catch (e) {
+      print(e);
+      return null;
     }
   }
 }

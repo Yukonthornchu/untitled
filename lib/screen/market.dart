@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
+import 'package:untitled/services/api_services.dart';
 import 'dart:async';
+
+import 'package:untitled/services/base_auth.dart';
 
 class market extends StatefulWidget {
   const market({Key? key}) : super(key: key);
@@ -11,6 +14,8 @@ class market extends StatefulWidget {
 }
 
 class _marketState extends State<market> {
+  //oil
+  BaseAuth? baseAuth;
 
   List _Data = [];
   // var _total = 0;
@@ -19,10 +24,8 @@ class _marketState extends State<market> {
   // String mydata = '';
 
   // Timer.periodic(Duration(seconds: 15), (Timer t) => checkForNewSharedLists());
- 
 
   void checkForNewSharedLists() {
-
     // do request here
     setState(() {
       // change state according to result of request
@@ -31,18 +34,25 @@ class _marketState extends State<market> {
 
   @override
   void initState() {
-    timer = Timer.periodic(Duration(seconds: 1), (Timer t) => checkForNewSharedLists());
+    baseAuth = Auth();
+    timer = Timer.periodic(
+        Duration(seconds: 1), (Timer t) => checkForNewSharedLists());
     super.initState();
     getData().then((value) => print(value));
     getData();
-
   }
+
   @override
   void dispose() {
     timer?.cancel();
     super.dispose();
   }
 
+  void addFavorite() async {
+    final userData = await baseAuth!.getCurrentUser();
+    print(userData!.uid);
+    // APIServices.addFavorite(uid:userData.uid,symbol: widget. );
+  }
 
   Future<String> getData() async {
     // const oneSec = Duration(seconds:1);
@@ -58,22 +68,21 @@ class _marketState extends State<market> {
     if (response.statusCode == 200) {
       var jsonResponse = convert.jsonDecode(response.body);
 
-        _Data = jsonResponse;
+      _Data = jsonResponse;
 
-        print(jsonResponse);
+      print(jsonResponse);
       // Timer mytimer = Timer.periodic(Duration(seconds: 1), (timer) {
       //   //code to run on every 5 seconds
       //
       // });
 
-        this.setState(() {
-
-          // _newCase = jsonResponse[0]['new_case'];
-          // _total = jsonResponse[0]['total_case'];
-          // print(jsonResponse);
-          // print("----------------");
-          // print(jsonResponse[0]['new_case'])
-        });
+      this.setState(() {
+        // _newCase = jsonResponse[0]['new_case'];
+        // _total = jsonResponse[0]['total_case'];
+        // print(jsonResponse);
+        // print("----------------");
+        // print(jsonResponse[0]['new_case'])
+      });
     }
     // Timer mytimer = Timer.periodic(Duration(seconds: 1), (timer) {
     //   mydata = ('${_Data}').toString();
@@ -84,7 +93,6 @@ class _marketState extends State<market> {
   }
 
   Widget build(BuildContext context) => Scaffold(
-
         // appBar: AppBar(
         //   title: Text('Market'),
         //   backgroundColor: Colors.black,
@@ -108,36 +116,27 @@ class _marketState extends State<market> {
               forceElevated: innerBoxIsScrolled,
               floating: true,
 
-
               // actions: [ Code ค้นหา
               //   IconButton(onPressed: (){
               //     showSearch(context: context, delegate: CustomSearchDelegate(),);
               //   }, icon: const Icon(Icons.search))
               // ],
-
             ),
           ],
 
-
           body: Padding(
-
             padding: const EdgeInsets.all(8.0),
             child: ListView.builder(
-
               itemCount: _Data.length,
               itemBuilder: (context, index) {
-
                 // Timer.periodic(Duration(seconds: 1), (Timer t) => checkForNewSharedLists());
 
-                return
-
-                    ListTile(
-
+                return ListTile(
                   // Icon(Icons.star_border_sharp)
-                  leading: Icon(Icons.star_border_sharp),
+                  leading: InkWell(
+                      onTap: () {}, child: Icon(Icons.star_border_sharp)),
                   title: Text('${_Data[index]['pair']}'),
                   trailing: Text('${_Data[index]['lastPrice']}'),
-
                 );
               },
             ),
@@ -145,8 +144,3 @@ class _marketState extends State<market> {
         ),
       );
 }
-
-
-
-
-

@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:untitled/screen/login.dart';
+import 'package:untitled/screen/mainpage.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,10 +30,9 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: LoginScreen());
+        home: mainPage());
   }
 }
-
 
 // import 'dart:js';
 //
@@ -95,13 +95,6 @@ class MyApp extends StatelessWidget {
 //   }
 // }
 
-
-
-
-
-
-
-
 //นาฬิกา Realtime
 //import 'dart:async';
 //import 'package:flutter/material.dart';
@@ -152,8 +145,6 @@ class MyApp extends StatelessWidget {
 //    );
 //  }
 //}
-
-
 
 // import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:firebase_core/firebase_core.dart';
@@ -413,5 +404,3 @@ class MyApp extends StatelessWidget {
 //     );
 //   }
 // }
-
-

@@ -5,6 +5,8 @@ class Config {
   static const String registerAPI = 'http://localhost:4200/Signup-mem';
   static const String userProfileAPI = '/users/user-profile';
 
+  static const String favorites = 'favorites';
+
   // /users/register
 
 }

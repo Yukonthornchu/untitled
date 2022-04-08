@@ -218,7 +218,6 @@
 // // }
 // }
 
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/gestures.dart';
@@ -227,9 +226,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:untitled/model/profile.dart';
 import 'package:untitled/screen/mainPage.dart';
-import 'package:untitled/screen/register.dart';
+// import 'package:untitled/screen/register.dart';
 import 'package:untitled/screen/sign_up.dart';
-
 
 import 'home.dart';
 
@@ -297,59 +295,59 @@ class _LoginScreenState extends State<LoginScreen> {
                             },
                           ),
 
-                      // SizedBox(
-                      //   child: ElevatedButton(
-                      //     child: Text("Login"),
-                      //       onPressed: (){
-                      //         Navigator.push(context,
-                      //           MaterialPageRoute(builder: (context) => mainPage()),);
-                      //       }
-                      //     // onPressed: () => doLogin(),
-                      //     // {
-                      //     //   if (formKey.currentState!.validate()) {
-                      //     //     formKey.currentState!.save();
-                      //     //     formKey.currentState!.reset();
-                      //     //     print(
-                      //     //         "Email = ${profile.Email} Password = ${profile.Password}");
-                      //     //   }
-                      //     // },
-                      //   ),
-                      // ),
+                          // SizedBox(
+                          //   child: ElevatedButton(
+                          //     child: Text("Login"),
+                          //       onPressed: (){
+                          //         Navigator.push(context,
+                          //           MaterialPageRoute(builder: (context) => mainPage()),);
+                          //       }
+                          //     // onPressed: () => doLogin(),
+                          //     // {
+                          //     //   if (formKey.currentState!.validate()) {
+                          //     //     formKey.currentState!.save();
+                          //     //     formKey.currentState!.reset();
+                          //     //     print(
+                          //     //         "Email = ${profile.Email} Password = ${profile.Password}");
+                          //     //   }
+                          //     // },
+                          //   ),
+                          // ),
 
-                      SizedBox(
-                        height: 15,
-                      ),
-
-                      SizedBox(
-                        child: RichText(
-                          text: TextSpan(
-                            style: const TextStyle(
-                              color: Colors.grey,
-                              fontSize: 15.0,
-                            ),
-                            children: <TextSpan>[
-                              TextSpan(text: "Don't have an account? "),
-                              TextSpan(
-                                text: 'SignUp',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  decoration: TextDecoration.underline,
-                                ),
-                                recognizer: TapGestureRecognizer()
-                                  ..onTap = () {
-                                    // Navigator.push(context, testRegis());
-                                    // Navigator.pushName(context, '/Register');
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => sign_up()),
-                                    );
-                                  },
-                              ),
-                            ],
+                          SizedBox(
+                            height: 15,
                           ),
-                        ),
-                      ),
+
+                          SizedBox(
+                            child: RichText(
+                              text: TextSpan(
+                                style: const TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 15.0,
+                                ),
+                                children: <TextSpan>[
+                                  TextSpan(text: "Don't have an account? "),
+                                  TextSpan(
+                                    text: 'SignUp',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      decoration: TextDecoration.underline,
+                                    ),
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap = () {
+                                        // Navigator.push(context, testRegis());
+                                        // Navigator.pushName(context, '/Register');
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => sign_up()),
+                                        );
+                                      },
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
 
                           SizedBox(
                             height: 15,
@@ -366,14 +364,14 @@ class _LoginScreenState extends State<LoginScreen> {
                                   try {
                                     await FirebaseAuth.instance
                                         .signInWithEmailAndPassword(
-                                        email: profile.email,
-                                        password: profile.password)
+                                            email: profile.email,
+                                            password: profile.password)
                                         .then((value) {
                                       formKey.currentState!.reset();
                                       Navigator.pushReplacement(context,
                                           MaterialPageRoute(builder: (context) {
-                                            return mainPage(); // WelcomeScreen
-                                          }));
+                                        return mainPage(); // WelcomeScreen
+                                      }));
                                     });
                                   } on FirebaseAuthException catch (e) {
                                     Fluttertoast.showToast(
