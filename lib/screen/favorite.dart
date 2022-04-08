@@ -45,22 +45,7 @@ class _favoriteState extends State<favorite> {
     return Scaffold(
       body: NestedScrollView(
         floatHeaderSlivers: true,
-        headerSliverBuilder: (context, innerBoxIsScrolled) => [
-          SliverAppBar(
-            backgroundColor: Colors.grey,
-            //สีขาว Theme.of(context).scaffoldBackgroundColor
-            title: Text('Favorite',
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 26,
-                    fontWeight: FontWeight.bold)),
-            // pinned: true,
-
-            snap: true,
-            centerTitle: true,
-            floating: true,
-          ),
-        ],
+        headerSliverBuilder: (context, innerBoxIsScrolled) => [],
         body: FutureBuilder(
           future: getFavorites(),
           builder: (
