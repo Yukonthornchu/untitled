@@ -10,16 +10,21 @@ class FavoriteProvider with ChangeNotifier {
   List<dynamic> get getFavoritesId => favoritesId;
 
   Future<List<dynamic>> getFavoriteList() async {
-    baseAuth = Auth();
-    final userData = await baseAuth!.getCurrentUser();
-    var ds = await FirebaseFirestore.instance
-        .collection(Config.favorites)
-        .doc(userData!.uid)
-        .get();
-    favoritesId = ds.data()!['symbol'];
-    print(favoritesId);
-    notifyListeners();
-    return favoritesId;
+    try {
+      baseAuth = Auth();
+      final userData = await baseAuth!.getCurrentUser();
+      var ds = await FirebaseFirestore.instance
+          .collection(Config.favorites)
+          .doc(userData!.uid)
+          .get();
+      if (ds.exists) {
+        favoritesId = ds.data()!['symbol'];
+        notifyListeners();
+      } else {}
+      return favoritesId;
+    } catch (e) {
+      return [];
+    }
   }
 
   void addFavoriteId(id) {

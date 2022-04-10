@@ -25,8 +25,9 @@ class _marketState extends State<market> {
   Future<List<dynamic>>? _getAssets;
 
   Future<List<dynamic>> getAssets() async {
-    await Provider.of<FavoriteProvider>(context, listen: false)
+    final result = await Provider.of<FavoriteProvider>(context, listen: false)
         .getFavoriteList();
+    print(result);
     final url = Uri.parse('https://api.coincap.io/v2/assets');
     final response = await http.get(url);
     if (response.statusCode == 200) {
@@ -137,7 +138,11 @@ class _marketState extends State<market> {
                       );
                     });
               } else if (snapshot.hasError) {
-                return Text('${snapshot.error}');
+                return Center(
+                    child: Text(
+                  '${snapshot.error}',
+                  style: TextStyle(fontSize: 20, color: Colors.white),
+                ));
               } else {
                 return const Center(child: CircularProgressIndicator());
               }
