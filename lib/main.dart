@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled/screen/login.dart';
 import 'package:untitled/screen/mainPage.dart';
+import 'package:untitled/screen/testLogin.dart';
 
 import 'provider/favorite_provider.dart';
 
@@ -37,7 +38,7 @@ class MyApp extends StatelessWidget {
             theme: ThemeData(
               primarySwatch: Colors.blue,
             ),
-            home: LoginScreen()));
+            home: testLogin()));
   }
 }
 

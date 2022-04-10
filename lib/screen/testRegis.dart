@@ -1,13 +1,16 @@
-import 'package:flutter/gestures.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:form_field_validator/form_field_validator.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:snippet_coder_utils/ProgressHUD.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
 import 'package:untitled/model/RegisReq_model.dart';
+import 'package:untitled/screen/login.dart';
+import 'package:untitled/screen/testLogin.dart';
 import 'package:untitled/services/api_services.dart';
 
 import '../config.dart';
-
 
 class testRegis extends StatefulWidget {
   const testRegis({Key? key}) : super(key: key);
@@ -72,11 +75,11 @@ class _testRegisState extends State<testRegis> {
                 Align(
                   alignment: Alignment.center,
                   child: Text(
-                      "Register",
+                    "Register",
                     style: TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.bold,
-                    ) ,
+                    ),
                   ),
                 ),
               ],
@@ -102,13 +105,11 @@ class _testRegisState extends State<testRegis> {
             context,
             "email",
             "Email",
-                (onValidate) {
-              if (onValidate.isEmtry) {
-                return "Email can\'t be Emtry";
-              }
-              return null;
-            },
-                (onSavedVal) {
+            MultiValidator([
+              RequiredValidator(errorText: "กรุณาป้อนอีเมลด้วยครับ"),
+              EmailValidator(errorText: "รูปแบบอีเมลไม่ถูกต้อง")
+            ]),
+            (onSavedVal) {
               email = onSavedVal;
             },
             borderFocusColor: Colors.white,
@@ -119,33 +120,28 @@ class _testRegisState extends State<testRegis> {
             borderRadius: 17,
           ),
           Padding(
-          padding: const EdgeInsets.only(
-
-    top: 10,
-
-    ),
+            padding: const EdgeInsets.only(
+              top: 10,
+            ),
           ),
 
-          FormHelper.inputFieldWidget(
-            context,
-            "username",
-            "Username",
-                (onValidate) {
-              if (onValidate.isEmtry) {
-                return "Username can\'t be Emtry";
-              }
-              return null;
-            },
-                (onSavedVal) {
-              username = onSavedVal;
-            },
-            borderFocusColor: Colors.white,
-            prefixIconColor: Colors.white,
-            borderColor: Colors.white,
-            textColor: Colors.white,
-            hintColor: Colors.white.withOpacity(0.5),
-            borderRadius: 17,
-          ),
+          // FormHelper.inputFieldWidget(
+          //   context,
+          //   "username",
+          //   "Username",
+          //   MultiValidator([
+          //     RequiredValidator(errorText: "กรุณาป้อมชื่อผู้ใช้งานด้วยครับ"),
+          //   ]),
+          //   (onSavedVal) {
+          //     username = onSavedVal;
+          //   },
+          //   borderFocusColor: Colors.white,
+          //   prefixIconColor: Colors.white,
+          //   borderColor: Colors.white,
+          //   textColor: Colors.white,
+          //   hintColor: Colors.white.withOpacity(0.5),
+          //   borderRadius: 17,
+          // ),
 
           Padding(
             padding: const EdgeInsets.only(
@@ -156,13 +152,8 @@ class _testRegisState extends State<testRegis> {
             context,
             "password",
             "Password",
-                (onValidate) {
-              if (onValidate.isEmtry) {
-                return "Password can\'t be Emtry";
-              }
-              return null;
-            },
-                (onSavedVal) {
+            RequiredValidator(errorText: "กรุณาป้อนรหัสผ่านด้วยครับ"),
+            (onSavedVal) {
               password = onSavedVal;
             },
             borderFocusColor: Colors.white,
@@ -194,13 +185,10 @@ class _testRegisState extends State<testRegis> {
             context,
             "con_password",
             "Confirm Password",
-                (onValidate) {
-              if (onValidate.isEmtry) {
-                return "Confirm Password can\'t be Emtry";
-              }
-              return null;
-            },
-                (onSavedVal) {
+            MultiValidator([
+              RequiredValidator(errorText: "กรุณาป้อนรหัสผ่านอีงครั้งด้วยครับ"),
+            ]),
+            (onSavedVal) {
               con_password = onSavedVal;
             },
             borderFocusColor: Colors.white,
@@ -230,51 +218,69 @@ class _testRegisState extends State<testRegis> {
           ),
           Center(
               child: FormHelper.submitButton(
-                "Register",
-                    () {
-                      if(validateAndSave()){
-                        setState(() {
-                          isAPIcallProcess = true;
-                        });
-                        RegisReq_model model = RegisReq_model(
-                          username: username!,
-                          password: password!,
-                          email: email!,
-                        );
+            "Register",
+            () async {
+              if (validateAndSave()) {
+                setState(() => isAPIcallProcess = true);
+                if (password == con_password) {
+                  RegisReq_model model = RegisReq_model(
+                    // username: username!,
+                    password: password!,
+                    email: email!,
+                  );
 
-                        APIServices.register(model).then((response)  {
-                          if (response.data != null) {
-                            FormHelper.showSimpleAlertDialog(context,
-                                Config.appName,
-                                'Registation Successfull !',
-                                'OK',
-                                    (){
-                                      Navigator.pushNamedAndRemoveUntil(
-                                        context,
-                                        '/login',
-                                            (route) => false,
-                                      );
-                                });
+                  try {
+                    await FirebaseAuth.instance
+                        .createUserWithEmailAndPassword(
+                            email: model.email!, password: model.password!)
+                        .then((value) {
+                      setState(() => isAPIcallProcess = false);
 
-                          }
-                          else{
-                            FormHelper.showSimpleAlertDialog(context,
-                                Config.appName,
-                                response.message,
-                                'OK',
-                                    (){
-                                  Navigator.pop(context);
-                                });
-                          }
-                        });
-                      }
-                    },
-                btnColor: HexColor("#FFFF00"),
-                borderColor: Colors.white,
-                txtColor: Colors.black,
-                borderRadius: 25,
-              )
-          ),
+                      FormHelper.showSimpleAlertDialog(context, Config.appName,
+                          'Registation Successfull !', 'OK', () {
+                        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                          builder: (context) {
+                            return testLogin(); // WelcomeScreen
+                          },
+                        ), (Route<dynamic> route) => false);
+                      });
+                    });
+                  } on FirebaseAuthException catch (e) {
+                    setState(() => isAPIcallProcess = false);
+                    Fluttertoast.showToast(
+                        msg: e.message!, gravity: ToastGravity.CENTER);
+                  }
+                  // APIServices.register(model).then((response) {
+                  //   if (response.data != null) {
+                  //     setState(() => isAPIcallProcess = false);
+                  //     FormHelper.showSimpleAlertDialog(context, Config.appName,
+                  //         'Registation Successfull !', 'OK', () {
+                  //       Navigator.pushNamedAndRemoveUntil(
+                  //         context,
+                  //         '/login',
+                  //         (route) => false,
+                  //       );
+                  //     });
+                  //   } else {
+                  //     setState(() => isAPIcallProcess = false);
+                  //     FormHelper.showSimpleAlertDialog(
+                  //         context, Config.appName, response.message, 'OK', () {
+                  //       Navigator.pop(context);
+                  //     });
+                  //   }
+                  // });
+                } else {
+                  setState(() => isAPIcallProcess = false);
+                  Fluttertoast.showToast(
+                      msg: 'รหัสผ่านไมตรงกัน', gravity: ToastGravity.CENTER);
+                }
+              }
+            },
+            btnColor: HexColor("#FFFF00"),
+            borderColor: Colors.white,
+            txtColor: Colors.black,
+            borderRadius: 25,
+          )),
           SizedBox(
             height: 20,
           ),
@@ -283,15 +289,14 @@ class _testRegisState extends State<testRegis> {
       ),
     );
   }
-  bool validateAndSave(){
+
+  bool validateAndSave() {
     final form = globalKey.currentState;
-    if (form!.validate()){
+    if (form!.validate()) {
       form.save();
       return true;
-    }
-    else{
+    } else {
       return false;
     }
   }
 }
-

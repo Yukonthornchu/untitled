@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:untitled/model/user.dart';
 import 'package:untitled/screen/login.dart';
+import 'package:untitled/screen/testLogin.dart';
 import 'package:untitled/utils/edit_profile.dart';
 import 'package:untitled/utils/user_preferences.dart';
 import 'package:untitled/widget/profile_widget.dart';
@@ -51,7 +52,6 @@ class _profileState extends State<profile> {
 
   Widget buildName(user) => Column(
         children: [
-
           SizedBox(height: 45),
           Text(
             user.name,
@@ -74,15 +74,15 @@ class _profileState extends State<profile> {
             child: Text("ออกจากระบบ"),
             onPressed: () {
               auth().signOut().then((value) {
-                Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) {
-                      return LoginScreen();
-                    }));
+                Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                  builder: (context) {
+                    return testLogin(); // WelcomeScreen
+                  },
+                ), (Route<dynamic> route) => false);
               });
             },
           )
         ],
-
       );
 
   // Widget buildUpgradeButton() => ButtonWidget(
@@ -90,5 +90,3 @@ class _profileState extends State<profile> {
   //   onClicked:(){},
   // );
 }
-
-
