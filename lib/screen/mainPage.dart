@@ -19,6 +19,7 @@ class _mainPageState extends State<mainPage> {
       currentIndex = index;
     });
   }
+
   final screens = [
     notification(),
     favorite(),
@@ -41,13 +42,15 @@ class _mainPageState extends State<mainPage> {
           title: Text('BitFriend'),
           actions: <Widget>[
             IconButton(
-              icon: Icon(Icons.star),
-                onPressed: (){
-              Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const favorite()),);
-            }),
+                icon: Icon(Icons.star),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const favorite()),
+                  );
+                }),
           ],
-          backgroundColor: Colors.black,
+          backgroundColor: Color(0xff02051A),
 
           // centerTitle: true,
         ),
@@ -73,24 +76,18 @@ class _mainPageState extends State<mainPage> {
                 backgroundColor: Colors.yellowAccent,
                 icon: Icon(Icons.notifications_on_outlined),
                 label: 'Notification'),
-
             BottomNavigationBarItem(
-
                 backgroundColor: Colors.yellowAccent,
                 icon: Icon(Icons.star),
                 label: 'Favorite'),
-
-
             BottomNavigationBarItem(
                 backgroundColor: Colors.yellowAccent,
                 icon: Icon(Icons.leaderboard_rounded),
                 label: 'Market'),
-
             BottomNavigationBarItem(
                 backgroundColor: Colors.yellowAccent,
                 icon: Icon(Icons.history),
                 label: 'History'),
-
             BottomNavigationBarItem(
                 backgroundColor: Colors.yellowAccent,
                 icon: Icon(Icons.person),

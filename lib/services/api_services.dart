@@ -95,9 +95,6 @@ import 'package:untitled/model/RegisReq_model.dart';
 import 'package:untitled/model/RegisResponse_model.dart';
 import 'package:untitled/model/coin_model.dart';
 import 'package:untitled/model/get_time.dart';
-import 'package:untitled/model/market_model.dart';
-import 'package:untitled/screen/favorite.dart';
-import 'package:untitled/services/base_auth.dart';
 import 'shared_service.dart';
 
 import '../config.dart';
@@ -187,13 +184,14 @@ class APIServices {
     });
   }
 
-  static Future<MarketListModel?> getMarket() async {
+  static Future<CoinListModel?> getMarket() async {
     try {
-      var url = Uri.https('dapi.binance.com', '/dapi/v1/ticker/24hr');
+      var url = Uri.parse('https://api.coincap.io/v2/assets');
       var response = await http.get(url);
       if (response.statusCode == 200) {
         final jsonResponse = jsonDecode(response.body);
-        return MarketListModel.fromJson(jsonResponse);
+
+        return CoinListModel.fromJson(jsonResponse['data']);
       } else {
         return null;
       }
@@ -202,14 +200,15 @@ class APIServices {
     }
   }
 
-  static Future<CoinListModel?> getCoin() async {
+  static Future<CoinModel?> getCoin(String id) async {
     try {
-      var url = Uri.https('api.coincap.io', '/v2/assets');
+      var url = Uri.parse('https://api.coincap.io/v2/assets/${id}');
+      print(url);
       var response = await http.get(url);
       if (response.statusCode == 200) {
         final jsonResponse = jsonDecode(response.body);
         print(jsonResponse['data']);
-        return CoinListModel.fromJson(jsonResponse['data']);
+        return CoinModel.fromJson(jsonResponse['data']);
       } else {
         return null;
       }
@@ -223,11 +222,11 @@ class APIServices {
     try {
       var url = Uri.parse(
           'https://api.coincap.io/v2/assets/${id}/history?interval=m1');
-      print(url);
+      // print(url);
       var response = await http.get(url);
       if (response.statusCode == 200) {
         final jsonResponse = jsonDecode(response.body);
-        print(jsonResponse['data']);
+        // print(jsonResponse['data']);
         return TimeListModel.fromJson(jsonResponse['data']);
       } else {
         return null;
